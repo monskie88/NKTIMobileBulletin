@@ -3,4 +3,64 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Name"
+        android:id="@+id/textView10" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Department"
+        android:id="@+id/textView11" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="TimePosted"
+        android:id="@+id/textView12" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Content"
+        android:id="@+id/textView13"
+        android:layout_gravity="center_horizontal" />
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:text="0"
+            android:gravity="center"
+            android:id="@+id/textView14"
+            android:layout_weight="3"/>
+
+       <Button
+           android:layout_height="fill_parent"
+           android:layout_width="fill_parent"
+           android:layout_weight="2"
+           android:text="JOIN"/>
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:text="0"
+            android:gravity="center"
+            android:layout_weight="3"/>
+
+        <Button
+            android:layout_height="fill_parent"
+            android:layout_width="fill_parent"
+            android:layout_weight="2"
+            android:text="NO THANKS"/>
+        </LinearLayout>
+
 </LinearLayout>
+
+
