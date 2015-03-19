@@ -234,7 +234,7 @@ public class MainActivity extends ActionBarActivity {
                             post.saveInBackground(new SaveCallback() {
                                 @Override
                                 public void done(ParseException e) {
-                                    if (e == null) {
+                                   /* if (e == null) {
                                         Toast.makeText(getApplicationContext(), "Successfully posted", Toast.LENGTH_SHORT).show();
                                         ParsePush push = new ParsePush();
                                         push.setChannel("NKTI");
@@ -248,7 +248,7 @@ public class MainActivity extends ActionBarActivity {
 
                                     } else {
                                         Toast.makeText(getApplicationContext(), e.toString(), Toast.LENGTH_SHORT).show();
-                                    }
+                                    }*/
 
                                 }
                             });

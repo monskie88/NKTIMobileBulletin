@@ -1,5 +1,8 @@
 package com.irm.nkti.nktimobilebulletin;
 
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -10,16 +13,27 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.irm.nkti.nktimobilebulletin.com.adapter.PendingFeedAdapter;
+import com.irm.nkti.nktimobilebulletin.com.models.PendingFeed;
 import com.parse.GetCallback;
 import com.parse.ParseException;
+import com.parse.ParseFile;
 import com.parse.ParseObject;
+import com.parse.ParsePush;
 import com.parse.ParseQuery;
+import com.parse.SaveCallback;
+
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 
 import eu.erikw.PullToRefreshListView;
 
 
 public class PendingPost extends ActionBarActivity {
     PullToRefreshListView lstPendingPost;
+    String fullname,strContent,date,strId,week;
+    ParseFile image;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,9 +49,18 @@ public class PendingPost extends ActionBarActivity {
                 query.getInBackground(txtId.getText().toString(),new GetCallback() {
                     @Override
                     public void done(ParseObject parseObject, ParseException e) {
-                        Toast.makeText(getApplicationContext(),parseObject.getString("content"),Toast.LENGTH_LONG).show();
+                        fullname=parseObject.getString("username");
+                        date=parseObject.getString("timePosted");
+                        strContent=parseObject.getString("content");
+                        image=parseObject.getParseFile("feedPhoto");
+                        //post.setAuthor(currentUser.getObjectId());
+
                     }
                 });
+                ParsePush push = new ParsePush();
+                push.setChannel("NKTI");
+                push.setMessage(fullname + " posted an announcement: ");
+                push.sendInBackground();
             }
         });
     }
