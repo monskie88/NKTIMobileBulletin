@@ -21,10 +21,14 @@ import com.parse.ParseUser;
 
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 //This is a test i know
 =======
 
 >>>>>>> origin/master
+=======
+//This is a test
+>>>>>>> parent of c0cf251... no
 =======
 //This is a test
 >>>>>>> parent of c0cf251... no
