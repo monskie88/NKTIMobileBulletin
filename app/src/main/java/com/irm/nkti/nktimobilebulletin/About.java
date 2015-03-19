@@ -19,7 +19,7 @@ import com.navdrawer.SimpleSideDrawer;
 import com.parse.ParseImageView;
 import com.parse.ParseUser;
 
-//This is a test
+//This is a test i know
 public class About extends ActionBarActivity {
     SimpleSideDrawer mNav;
     ActionBar actionBar;
