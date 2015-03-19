@@ -4,8 +4,16 @@ import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.irm.nkti.nktimobilebulletin.com.adapter.PendingFeedAdapter;
+import com.parse.GetCallback;
+import com.parse.ParseException;
+import com.parse.ParseObject;
+import com.parse.ParseQuery;
 
 import eu.erikw.PullToRefreshListView;
 
@@ -19,6 +27,19 @@ public class PendingPost extends ActionBarActivity {
         lstPendingPost=(PullToRefreshListView)findViewById(R.id.lstPending);
         PendingFeedAdapter adapter=new PendingFeedAdapter(getApplicationContext());
         lstPendingPost.setAdapter(adapter);
+        lstPendingPost.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
+                TextView txtId=(TextView)v.findViewById(R.id.FeedId);
+                ParseQuery query=ParseQuery.getQuery("PendingFeed");
+                query.getInBackground(txtId.getText().toString(),new GetCallback() {
+                    @Override
+                    public void done(ParseObject parseObject, ParseException e) {
+                        Toast.makeText(getApplicationContext(),parseObject.getString("content"),Toast.LENGTH_LONG).show();
+                    }
+                });
+            }
+        });
     }
 
 
