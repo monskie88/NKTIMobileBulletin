@@ -1,5 +1,6 @@
 package com.irm.nkti.nktimobilebulletin;
 
+import android.app.ProgressDialog;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
@@ -46,6 +47,7 @@ public class PendingPost extends ActionBarActivity {
             public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
                 TextView txtId=(TextView)v.findViewById(R.id.FeedId);
                 ParseQuery query=ParseQuery.getQuery("PendingFeed");
+                startLoading();
                 query.getInBackground(txtId.getText().toString(),new GetCallback() {
                     @Override
                     public void done(ParseObject parseObject, ParseException e) {
@@ -86,5 +88,17 @@ public class PendingPost extends ActionBarActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+    private void startLoading() {
+        progressDialog=new ProgressDialog(PendingPost.this);
+        progressDialog.setTitle("Uploading");
+        progressDialog.setMessage("Uploading your post.Uploading speed depends on your connectivity.");
+        progressDialog.setCancelable(false);
+        progressDialog.show();
+
+    }
+    private void stopLoading(){
+        progressDialog.dismiss();
+        progressDialog = null;
     }
 }

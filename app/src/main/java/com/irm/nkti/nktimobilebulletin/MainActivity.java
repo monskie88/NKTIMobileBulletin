@@ -234,6 +234,7 @@ public class MainActivity extends ActionBarActivity {
                             post.saveInBackground(new SaveCallback() {
                                 @Override
                                 public void done(ParseException e) {
+                                    stopLoading();
                                    /* if (e == null) {
                                         Toast.makeText(getApplicationContext(), "Successfully posted", Toast.LENGTH_SHORT).show();
                                         ParsePush push = new ParsePush();
