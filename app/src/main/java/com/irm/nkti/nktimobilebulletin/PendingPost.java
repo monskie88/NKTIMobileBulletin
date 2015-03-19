@@ -14,6 +14,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.irm.nkti.nktimobilebulletin.com.adapter.PendingFeedAdapter;
+import com.irm.nkti.nktimobilebulletin.com.models.FeedItem;
 import com.irm.nkti.nktimobilebulletin.com.models.PendingFeed;
 import com.parse.GetCallback;
 import com.parse.ParseException;
@@ -22,6 +23,7 @@ import com.parse.ParseObject;
 import com.parse.ParsePush;
 import com.parse.ParseQuery;
 import com.parse.SaveCallback;
+import com.parse.SendCallback;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -52,18 +54,36 @@ public class PendingPost extends ActionBarActivity {
                 query.getInBackground(txtId.getText().toString(),new GetCallback() {
                     @Override
                     public void done(ParseObject parseObject, ParseException e) {
+
                         fullname=parseObject.getString("username");
                         date=parseObject.getString("timePosted");
                         strContent=parseObject.getString("content");
                         image=parseObject.getParseFile("feedPhoto");
-                        //post.setAuthor(currentUser.getObjectId());
+
 
                     }
                 });
-                ParsePush push = new ParsePush();
-                push.setChannel("NKTI");
-                push.setMessage(fullname + " posted an announcement: ");
-                push.sendInBackground();
+
+                FeedItem post=new FeedItem();
+                post.setUsername(fullname);
+                post.setContent(strContent);
+
+                post.setWeek(Calendar.getInstance().get(Calendar.WEEK_OF_YEAR));
+                post.setTime(date);
+                post.saveInBackground(new SaveCallback() {
+                    @Override
+                    public void done(ParseException e) {
+                        ParsePush push = new ParsePush();
+                        push.setChannel("NKTI");
+                        push.setMessage(fullname + " posted an announcement: ");
+                        push.sendInBackground(new SendCallback() {
+                            @Override
+                            public void done(ParseException e) {
+                                stopLoading();
+                            }
+                        });
+                    }
+                });
             }
         });
     }
@@ -92,8 +112,8 @@ public class PendingPost extends ActionBarActivity {
     }
     private void startLoading() {
         progressDialog=new ProgressDialog(PendingPost.this);
-        progressDialog.setTitle("Uploading");
-        progressDialog.setMessage("Uploading your post.Uploading speed depends on your connectivity.");
+        progressDialog.setTitle("Processing");
+        progressDialog.setMessage("Processing post......");
         progressDialog.setCancelable(false);
         progressDialog.show();
 
