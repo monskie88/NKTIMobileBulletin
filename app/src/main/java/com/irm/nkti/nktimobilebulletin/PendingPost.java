@@ -34,6 +34,7 @@ public class PendingPost extends ActionBarActivity {
     PullToRefreshListView lstPendingPost;
     String fullname,strContent,date,strId,week;
     ParseFile image;
+    ProgressDialog progressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
