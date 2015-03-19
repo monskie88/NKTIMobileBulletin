@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/leftBehindMenuScroll"
+    >
+    <LinearLayout
+       style="@style/behindMenuScrollContent"
+        android:baselineAligned="false">
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="200dp">
+
+       <com.parse.ParseImageView
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:src="@drawable/nkti_default"
+            android:layout_gravity="center"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+           android:id="@+id/imgProfilePhoto"/>
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="NKTI-IRM"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_marginBottom="16dp"
+            android:gravity="center"
+            android:id="@+id/txtName"/>
+
+
+    </RelativeLayout>
+
+        <Button
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:text="Feed"
+            android:id="@+id/btnFeed"
+            android:drawableLeft="@drawable/reports"
+            android:background="#FFFF"
+            android:textColor="#000"/>
+        <Button
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:text="Pending Post"
+            android:id="@+id/btnPendingFeed"
+            android:drawableLeft="@drawable/reports"
+            android:background="#FFFF"
+            android:textColor="#000"
+            android:layout_marginTop="5dp"/>
+        <Button
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:text="Events"
+            android:id="@+id/btnEvents"
+            android:drawableLeft="@drawable/reports"
+            android:background="#FFFF"
+            android:textColor="#000"
+            android:layout_marginTop="5dp"/>
+
+
+
+
+        <Button
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:text="Users"
+            android:id="@+id/btnUsers"
+            android:drawableLeft="@drawable/account"
+            android:background="#FFFF"
+            android:layout_marginTop="5dp"
+            android:textColor="#000"/>
+        <Button
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:text="Administrative Tools"
+            android:id="@+id/btnPref"
+            android:layout_marginTop="5dp"
+            android:background="#FFFF"
+            android:textColor="#000"
+            android:drawableLeft="@drawable/pre2"/>
+        <Button
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:text="Account"
+            android:id="@+id/btnAccount"
+            android:drawableLeft="@drawable/feeds"
+            android:background="#FFFF"
+            android:layout_marginTop="5dp"
+            android:textColor="#000"/>
+        <Button
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:text="About"
+            android:drawableLeft="@drawable/about"
+            android:background="#FFFF"
+            android:layout_marginTop="5dp"
+            android:textColor="#000"
+            android:id="@+id/btnAbout"/>
+        <Button
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:text="Logout"
+            android:id="@+id/btnLogOut"
+            android:drawableLeft="@drawable/logout"
+            android:background="#FFFF"
+            android:layout_marginTop="5dp"
+            android:textColor="#000"/>
+        
+
+       </LinearLayout>
+
+
+
+</ScrollView>
