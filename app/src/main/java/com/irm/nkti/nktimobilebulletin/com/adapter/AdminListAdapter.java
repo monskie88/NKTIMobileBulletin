@@ -50,6 +50,14 @@ public class AdminListAdapter extends ParseQueryAdapter<AdminList> {
         txtLevel.setText(object.getLevel());
         TextView txtId=(TextView)v.findViewById(R.id.txtCode);
         txtId.setText(object.getId());
+        TextView txtPromotion=(TextView)v.findViewById(R.id.txtpromotedby);
+        txtPromotion.setText(object.getPromotion());
+        TextView txtDemotion=(TextView)v.findViewById(R.id.txtdemotedby);
+        txtDemotion.setText(object.getDemotion());
+        TextView txtPromotionDate=(TextView)v.findViewById(R.id.txtPromotionEffectivity);
+        txtPromotionDate.setText(object.getPromotionDate());
+        TextView txtDemotionDate=(TextView)v.findViewById(R.id.txtDemotionEffectivity);
+        txtDemotionDate.setText(object.getDemotionDate());
         return v;
     }
 }

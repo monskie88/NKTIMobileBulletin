@@ -116,6 +116,10 @@
             android:name=".PendingPost"
             android:label="@string/title_activity_pending_post" >
         </activity>
+        <activity
+            android:name=".Event"
+            android:label="@string/title_activity_event" >
+        </activity>
     </application>
 
 </manifest>

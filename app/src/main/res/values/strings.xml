@@ -21,5 +21,6 @@
     <string name="title_activity_uploadlogo">LOGO</string>
     <string name="title_activity_preview">Preview</string>
     <string name="title_activity_pending_post">Pending Post</string>
+    <string name="title_activity_event">Event</string>
 
 </resources>

@@ -39,7 +39,8 @@
         android:layout_below="@+id/linearLayout2"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:id="@+id/admincon">
+        android:id="@+id/admincon"
+        android:visibility="gone">
 
         <TextView
             android:layout_width="wrap_content"

@@ -39,6 +39,10 @@ import com.parse.ParseQuery;
 import com.parse.ParseUser;
 import com.parse.SaveCallback;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+
 
 public class ProfileViewer extends ActionBarActivity {
 ListView lstUsers;
@@ -121,11 +125,6 @@ ListView lstUsers;
                             if(level.equals("admin")){
                                 dialog.dismiss();
                                 //Toast.makeText(ProfileViewer.this,"Highest privilege granted!",Toast.LENGTH_SHORT).show();
-
-
-
-
-
                             }
                             else if(level.equals("VIP")){
                                 Toast.makeText(getApplicationContext(),"Admin privilege granted!",Toast.LENGTH_SHORT).show();
@@ -134,7 +133,11 @@ ListView lstUsers;
                                 query.getFirstInBackground(new GetCallback<AdminList>() {
                                     @Override
                                     public void done(AdminList adminList, ParseException e) {
+                                        DateFormat df = new SimpleDateFormat("MMMM dd, yyyy");
+                                        String mydate = df.format(Calendar.getInstance().getTime());
+                                        adminList.setPromotionDate(mydate);
                                         adminList.setLevel("admin");
+                                        adminList.setPromotedby(MainActivity.fullname);
                                         adminList.saveInBackground(new SaveCallback() {
                                             @Override
                                             public void done(ParseException e) {
@@ -153,6 +156,10 @@ ListView lstUsers;
                                     @Override
                                     public void done(AdminList adminList, ParseException e) {
                                         adminList.setLevel("VIP");
+                                        adminList.setPromotedby(MainActivity.fullname);
+                                        DateFormat df = new SimpleDateFormat("MMMM dd, yyyy");
+                                        String mydate = df.format(Calendar.getInstance().getTime());
+                                        adminList.setPromotionDate(mydate);
                                         adminList.saveInBackground(new SaveCallback() {
                                             @Override
                                             public void done(ParseException e) {
@@ -178,7 +185,11 @@ ListView lstUsers;
                                 query.getFirstInBackground(new GetCallback<AdminList>() {
                                     @Override
                                     public void done(AdminList adminList, ParseException e) {
+                                        adminList.setDemotedby(MainActivity.fullname);
                                         adminList.setLevel("VIP");
+                                        DateFormat df = new SimpleDateFormat("MMMM dd, yyyy");
+                                        String mydate = df.format(Calendar.getInstance().getTime());
+                                        adminList.setDemotionDate(mydate);
                                         adminList.saveInBackground(new SaveCallback() {
                                             @Override
                                             public void done(ParseException e) {
@@ -201,7 +212,11 @@ ListView lstUsers;
                                 query.getFirstInBackground(new GetCallback<AdminList>() {
                                     @Override
                                     public void done(AdminList adminList, ParseException e) {
+                                        adminList.setDemotedby(MainActivity.fullname);
                                         adminList.setLevel("User");
+                                        DateFormat df = new SimpleDateFormat("MMMM dd, yyyy");
+                                        String mydate = df.format(Calendar.getInstance().getTime());
+                                        adminList.setDemotionDate(mydate);
                                         adminList.saveInBackground(new SaveCallback() {
                                             @Override
                                             public void done(ParseException e) {
@@ -215,7 +230,6 @@ ListView lstUsers;
                             }
                             else if(level.equals("User")){
                                 //Toast.makeText(getApplicationContext(),"VIP privilege granted!",Toast.LENGTH_SHORT).show();
-
                                 lstUsers.setAdapter(adapter);
                             }
 
@@ -260,9 +274,22 @@ ListView lstUsers;
 
             }
         });
+        Button btnPending=(Button)findViewById(R.id.btnPendingFeed);
+        /*Button btnEvent=(Button)findViewById(R.id.btnEvents);
 
+        btnEvent.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getApplicationContext(),Event.class));
+            }
+        });*/
+        btnPending.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getApplicationContext(),PendingPost.class));
 
-
+            }
+        });
         btnFeed.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

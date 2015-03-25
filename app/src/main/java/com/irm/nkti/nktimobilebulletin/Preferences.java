@@ -84,11 +84,7 @@ public class Preferences extends ActionBarActivity {
             Toast.makeText(getApplicationContext(),e.toString(),Toast.LENGTH_LONG).show();
         }
 
-       btnUsers.setVisibility(View.GONE);
-        if(MainActivity.LEVEL.equals("admin")){
-            btnUsers.setVisibility(View.VISIBLE);
-            btnPrefs.setText("Preferences");
-        }
+
 
 
 
@@ -99,6 +95,31 @@ public class Preferences extends ActionBarActivity {
                 finish();
             }
         });
+        Button btnPending=(Button)findViewById(R.id.btnPendingFeed);
+       /* Button btnEvent=(Button)findViewById(R.id.btnEvents);
+
+        btnEvent.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getApplicationContext(),Event.class));
+            }
+        });*/
+        btnPending.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getApplicationContext(),PendingPost.class));
+
+            }
+        });
+        btnUsers.setVisibility(View.GONE);
+        btnPending.setVisibility(View.GONE);
+        btnPrefs.setText("Preferences");
+        if(MainActivity.LEVEL.equals("admin")){
+            btnUsers.setVisibility(View.VISIBLE);
+            btnPending.setVisibility(View.VISIBLE);
+            btnPrefs.setText("Tools");
+
+        }
         btnFeed.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

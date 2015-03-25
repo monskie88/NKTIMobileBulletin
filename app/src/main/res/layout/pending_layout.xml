@@ -5,7 +5,7 @@
             <Button
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:text="Approved"
+            android:text="Approve"
             android:id="@+id/btnApproved"
             android:layout_gravity="center_horizontal" />
 

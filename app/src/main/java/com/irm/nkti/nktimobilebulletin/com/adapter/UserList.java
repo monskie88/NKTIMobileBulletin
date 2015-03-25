@@ -45,6 +45,10 @@ public class UserList extends ParseQueryAdapter<AdminList> {
         txtLevel.setText(object.getLevel());
         TextView txtId=(TextView)v.findViewById(R.id.txtCode);
         txtId.setText(object.getId());
+        TextView txtPromotion=(TextView)v.findViewById(R.id.txtpromotedby);
+        txtPromotion.setText(object.getPromotion());
+        TextView txtDemotion=(TextView)v.findViewById(R.id.txtdemotedby);
+        txtDemotion.setText(object.getDemotion());
         return v;
 
     }

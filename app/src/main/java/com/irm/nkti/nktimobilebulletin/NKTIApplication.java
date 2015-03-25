@@ -3,6 +3,7 @@ package com.irm.nkti.nktimobilebulletin;
 import android.app.Application;
 
 import com.irm.nkti.nktimobilebulletin.com.models.AdminList;
+import com.irm.nkti.nktimobilebulletin.com.models.EventItem;
 import com.irm.nkti.nktimobilebulletin.com.models.FeedItem;
 import com.irm.nkti.nktimobilebulletin.com.models.PendingFeed;
 import com.parse.Parse;
@@ -26,6 +27,7 @@ public class NKTIApplication extends Application{
         ParseObject.registerSubclass(FeedItem.class);
         ParseObject.registerSubclass(AdminList.class);
         ParseObject.registerSubclass(PendingFeed.class);
+        ParseObject.registerSubclass(EventItem.class);
         Parse.initialize(this, "VRsvlABLhL1pm8zqcbuKS3RZxOTMfStrbkvVd6An", "1QONJCeJEKa9nFqyh3kn9z2m1EjfRlI1DZG4RIyr");
 
 		/*

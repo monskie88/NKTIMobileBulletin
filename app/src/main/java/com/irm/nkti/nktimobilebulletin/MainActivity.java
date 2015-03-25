@@ -93,12 +93,13 @@ public class MainActivity extends ActionBarActivity {
     Button btnPrefs;
     Button btnAbout;
     Button btnPending;
+    Button btnEvent;
     RelativeLayout feedContainer;
     TextView txtName;
     Bitmap img;
     private static final int SELECT_PICTURE = 1;
     private String selectedImagePath;
-    public static String objectId, username,fullname;
+    public static String department, username,fullname;
     PullToRefreshListView lstFeeds;
     public static ParseFile imgFile;
     ProgressDialog progressDialog;
@@ -116,9 +117,7 @@ public class MainActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ParseObject.registerSubclass(FeedItem.class);
-        //Parse.enableLocalDatastore(MainActivity.this);
-        String[] items = {"Today", "Yesterday", "Week", "Last Week", "Month", "Last Month"};
-        Toast.makeText(getApplicationContext(), ("" + Calendar.getInstance().get(Calendar.DATE)), Toast.LENGTH_LONG).show();
+        //Toast.makeText(getApplicationContext(), ("" + Calendar.getInstance().get(Calendar.DATE)), Toast.LENGTH_LONG).show();
 
 
         mNav = new SimpleSideDrawer(this);
@@ -150,12 +149,14 @@ public class MainActivity extends ActionBarActivity {
         btnPrefs = (Button) findViewById(R.id.btnPref);
         btnAbout = (Button) findViewById(R.id.btnAbout);
         btnPending=(Button)findViewById(R.id.btnPendingFeed);
+        //btnEvent=(Button)findViewById(R.id.btnEvents);
 
 
         progressDialog = new ProgressDialog(MainActivity.this);
 
         feedContainer = (RelativeLayout) findViewById(R.id.feedcontainer);
         btnUsers.setVisibility(View.GONE);
+        btnPending.setVisibility(View.GONE);
         btnNewPost = (Button) findViewById(R.id.btnNewPost);
         getKeyInfo();
 
@@ -205,36 +206,76 @@ public class MainActivity extends ActionBarActivity {
                         if (edtCOntent.getText().toString().equals("")) {
                             Toast.makeText(getApplicationContext(), "Cannot post with empty content", Toast.LENGTH_LONG).show();
                         } else {
-                            startLoading();
-                            newPost.dismiss();
-                            PendingFeed post = new PendingFeed();
-                            post.setUsername(fullname);
-                            post.setContent(edtCOntent.getText().toString());
+                            if(LEVEL_OF_ACCESSIBILITY.equals("admin")){
+                                startLoading();
+                                newPost.dismiss();
+                                FeedItem post = new FeedItem();
+                                post.setUsername(fullname);
+                                post.setContent(edtCOntent.getText().toString());
 
-                            post.setWeek(Calendar.getInstance().get(Calendar.WEEK_OF_YEAR));
-                            DateFormat df = new SimpleDateFormat("EEEE, hh:mm ,MMMM dd, yyyy");
-                            String mydate = df.format(Calendar.getInstance().getTime());
-                            post.setTime(mydate);
-                            try {
-                                post.setFeedPhoto(saveAsParseFile());
-                                post.setAttachment(1);
-                                img = null;
-                            } catch (Exception e) {
-                                Drawable myDrawable = getResources().getDrawable(R.drawable.def);
-                                Bitmap draw = ((BitmapDrawable) myDrawable).getBitmap();
-                                img = draw;
-                                post.setFeedPhoto(saveAsParseFile());
-                                img = null;
-                                post.setAttachment(0);
+                                post.setWeek(Calendar.getInstance().get(Calendar.WEEK_OF_YEAR));
+                                DateFormat df = new SimpleDateFormat("EEEE, hh:mm ,MMMM dd, yyyy");
+                                String mydate = df.format(Calendar.getInstance().getTime());
+                                post.setTime(mydate);
+                                try {
+                                    post.setFeedPhoto(saveAsParseFile());
+                                    post.setAttachment(1);
+                                    img = null;
+                                } catch (Exception e) {
+                                    Drawable myDrawable = getResources().getDrawable(R.drawable.def);
+                                    Bitmap draw = ((BitmapDrawable) myDrawable).getBitmap();
+                                    img = draw;
+                                    post.setFeedPhoto(saveAsParseFile());
+                                    img = null;
+                                    post.setAttachment(0);
 
-                            }
+                                }
 
 
-                            //post.setAuthor(currentUser.getObjectId());
-                            post.saveInBackground(new SaveCallback() {
-                                @Override
-                                public void done(ParseException e) {
-                                    stopLoading();
+                                //post.setAuthor(currentUser.getObjectId());
+                                post.saveInBackground(new SaveCallback() {
+                                    @Override
+                                    public void done(ParseException e) {
+                                        stopLoading();
+                                        ParsePush push = new ParsePush();
+                                        push.setChannel("NKTI");
+                                        push.setMessage(fullname + " posted an announcement: ");
+                                        push.sendInBackground();
+
+                                    }
+                                });
+
+                            }else {
+                                startLoading();
+                                newPost.dismiss();
+                                PendingFeed post = new PendingFeed();
+                                post.setUsername(fullname);
+                                post.setContent(edtCOntent.getText().toString());
+
+                                post.setWeek(Calendar.getInstance().get(Calendar.WEEK_OF_YEAR));
+                                DateFormat df = new SimpleDateFormat("EEEE, hh:mm ,MMMM dd, yyyy");
+                                String mydate = df.format(Calendar.getInstance().getTime());
+                                post.setTime(mydate);
+                                try {
+                                    post.setFeedPhoto(saveAsParseFile());
+                                    post.setAttachment(1);
+                                    img = null;
+                                } catch (Exception e) {
+                                    Drawable myDrawable = getResources().getDrawable(R.drawable.def);
+                                    Bitmap draw = ((BitmapDrawable) myDrawable).getBitmap();
+                                    img = draw;
+                                    post.setFeedPhoto(saveAsParseFile());
+                                    img = null;
+                                    post.setAttachment(0);
+
+                                }
+
+
+                                //post.setAuthor(currentUser.getObjectId());
+                                post.saveInBackground(new SaveCallback() {
+                                    @Override
+                                    public void done(ParseException e) {
+                                        stopLoading();
                                    /* if (e == null) {
                                         Toast.makeText(getApplicationContext(), "Successfully posted", Toast.LENGTH_SHORT).show();
                                         ParsePush push = new ParsePush();
@@ -251,10 +292,10 @@ public class MainActivity extends ActionBarActivity {
                                         Toast.makeText(getApplicationContext(), e.toString(), Toast.LENGTH_SHORT).show();
                                     }*/
 
-                                }
-                            });
+                                    }
+                                });
+                            }
                         }
-
 
                     }
                 });
@@ -276,6 +317,12 @@ public class MainActivity extends ActionBarActivity {
 
 
         });
+      /*  btnEvent.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getApplicationContext(),Event.class));
+            }
+        });*/
         btnPending.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -400,7 +447,7 @@ public class MainActivity extends ActionBarActivity {
                     dialog.setContentView(R.layout.feed_action);
                     dialog.setTitle("Feed Action");
                     dialog.show();
-                    Button btnEdit = (Button) dialog.findViewById(R.id.btnEdit);
+
                     Button btnDel = (Button) dialog.findViewById(R.id.btnDelete);
                     btnDel.setOnClickListener(new View.OnClickListener() {
                         @Override
@@ -425,14 +472,7 @@ public class MainActivity extends ActionBarActivity {
                             });
                         }
                     });
-                    btnEdit.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            Toast.makeText(getApplicationContext(), "UNDER CONSTRUCTION", Toast.LENGTH_LONG).show();
-                            //Edit post
 
-                        }
-                    });
                 }
 
 
@@ -457,16 +497,20 @@ public class MainActivity extends ActionBarActivity {
                     txtName.setText(parseObject.getString("fullname"));
                     fullname=txtName.getText().toString();
                     LEVEL_OF_ACCESSIBILITY=parseObject.getString("userType");
+                    department=parseObject.getString("deparment");
                     LEVEL=LEVEL_OF_ACCESSIBILITY;
                     if(LEVEL_OF_ACCESSIBILITY.equals("User")){
                         btnNewPost.setVisibility(View.GONE);
+
                     }
                     else{
                         btnNewPost.setVisibility(View.VISIBLE);
                     }
                     if(LEVEL_OF_ACCESSIBILITY.equals("admin")){
                         btnUsers.setVisibility(View.VISIBLE);
+                        btnPending.setVisibility(View.VISIBLE);
                         btnPrefs.setText("Preferences");
+
                     }
 
                 }

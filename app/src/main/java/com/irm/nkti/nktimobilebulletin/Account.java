@@ -182,6 +182,7 @@ public class Account extends ActionBarActivity {
 
         });
         btnChangePass=(Button)findViewById(R.id.btnChangePass);
+        btnChangePass.setVisibility(View.GONE);
         btnChangePass.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -236,6 +237,22 @@ public class Account extends ActionBarActivity {
 
             }
         });
+        Button btnPending=(Button)findViewById(R.id.btnPendingFeed);
+       /* Button btnEvent=(Button)findViewById(R.id.btnEvents);
+
+        btnEvent.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getApplicationContext(),Event.class));
+            }
+        });*/
+        btnPending.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getApplicationContext(),PendingPost.class));
+
+            }
+        });
         btnFeed.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -244,9 +261,12 @@ public class Account extends ActionBarActivity {
             }
         });
         btnUsers.setVisibility(View.GONE);
+        btnPending.setVisibility(View.GONE);
+        btnPrefs.setText("Preferences");
         if(MainActivity.LEVEL.equals("admin")){
             btnUsers.setVisibility(View.VISIBLE);
-            btnPrefs.setText("Preferences");
+            btnPrefs.setText("Tools");
+            btnPending.setVisibility(View.VISIBLE);
         }
         btnUsers.setOnClickListener(new View.OnClickListener() {
             @Override
